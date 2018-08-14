@@ -8,4 +8,4 @@ __all__ = [
 
 
 def load_csv(d: dict) -> dict:
-    return {k: pandas.read_csv(v, sep=' ') for k, v in d.items()}
+    return {k: pandas.read_csv(v) for k, v in d.items()}
