@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from geothermpy import Point, rectangle_to_points
+from geothermpy import Point, Rectangle, within_rectangle
 
 __all__ = [
     'linear_interpolate',
@@ -8,16 +8,20 @@ __all__ = [
 ]
 
 
-def linear_interpolate(p1: Point, p2: Point):
-    x1, x2, y1, y2 = p1.x, p2.x, p1.y, p2.y
-    return lambda x: ((x2 - x) * y1 + (x - x1) * y2) / (x2 - x1)
+def linear_interpolate(a, b, f, g):
+    return lambda x: ((b - x) * f + (x - a) * g) / (b - a)
 
 
-def bilinear_interpolate(rec):
+def bilinear_interpolate(q11, q12, q21, q22):
+    x1, x2, y1, y2 = q11.x, q21.x, q11.y, q22.y
+    v11, v12, v21, v22 = q11.z, q12.z, q21.z, q22.z
+    rec = Rectangle(x1, y1, x2, y2)
+
     def f(x, y):
-        a, b, c, d = rectangle_to_points(rec)
-        y1, y2 = a.y, b.y
-        f1 = linear_interpolate(a, c)
-        f2 = linear_interpolate(b, d)
-        return ((y2 - y) * f1(x) + (y - y1) * f2(x)) / (y2 - y1)
+        if not within_rectangle(rec, Point(x, y)):
+            raise ValueError("The point ($x, $y) is out of boundary!")
+        v1 = linear_interpolate(x1, x2, v11, v21)(x)
+        v2 = linear_interpolate(x1, x2, v12, v22)(x)
+        return linear_interpolate(y1, y2, v1, v2)(y)
+
     return f
