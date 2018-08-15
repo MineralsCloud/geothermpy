@@ -13,19 +13,26 @@ __all__ = [
 ]
 
 Point = namedtuple('Point', ['x', 'y'])
-Rectangle = namedtuple('Rectangle', ['lx', 'ly', 'rx', 'ry'])
 SurfacePoint = namedtuple('SurfacePoint', ['x', 'y', 'z'])
 
 
+class Rectangle:
+    def __init__(self, lx, rx, dy, uy):
+        self.lx = min(lx, rx)
+        self.rx = max(lx, rx)
+        self.dy = min(dy, uy)
+        self.uy = max(dy, uy)
+
+
 def rectangle_to_points(rec: Rectangle) -> typing.Tuple[Point, ...]:
-    lx, rx, ly, ry = rec.lx, rec.ly, rec.rx, rec.ry
-    return Point(lx, ly), Point(lx, ry), Point(rx, ly), Point(rx, ry)
+    lx, rx, dy, uy = rec.lx, rec.rx, rec.dy, rec.uy
+    return Point(lx, dy), Point(lx, uy), Point(rx, dy), Point(rx, uy)
 
 
 def within_rectangle(rec: Rectangle, t: Point) -> bool:
-    lx, rx, ly, ry = rec.lx, rec.ly, rec.rx, rec.ry
+    lx, rx, dy, uy = rec.lx, rec.rx, rec.dy, rec.uy
     x, y = t.x, t.y
-    return lx <= x <= rx and ly <= y <= ry
+    return lx <= x <= rx and dy <= y <= uy
 
 
 def point_to_surface_point(p: Point, z: float) -> SurfacePoint:
