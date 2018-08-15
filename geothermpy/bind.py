@@ -10,7 +10,7 @@ def find_nearest(arr: np.array, x):
 
 
 def bind(gg: GeothermalGradient, p0: Point, h=0.01, n=1000):
-    ts = gg.temperatures
+    ts = gg.temperatures.values
     ps = gg.pressures
     geothermal_gradient = gg.gradient.values
     trace = [p0]

@@ -14,6 +14,5 @@ if __name__ == '__main__':
     v = d['v']
     ts = v.iloc[:, 0]
 
-    dg = GeothermalGradient(alpha, v, cp).calculate_gradient()
-
-    bind.bind(dg, Point(51, 300))
+    gg = GeothermalGradient(alpha, v, cp)
+    bind.bind(gg, Point(51, 300))
