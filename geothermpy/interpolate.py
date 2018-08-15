@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from geothermpy import Point, Rectangle, within_rectangle
+from geothermpy import Point, Rectangle, SurfacePoint, within_rectangle
 
 __all__ = [
     'linear_interpolate',
@@ -12,7 +12,7 @@ def linear_interpolate(a, b, f, g):
     return lambda x: ((b - x) * f + (x - a) * g) / (b - a)
 
 
-def bilinear_interpolate(q11, q12, q21, q22):
+def bilinear_interpolate(q11: SurfacePoint, q12: SurfacePoint, q21: SurfacePoint, q22: SurfacePoint):
     x1, x2, y1, y2 = q11.x, q21.x, q11.y, q22.y
     v11, v12, v21, v22 = q11.z, q12.z, q21.z, q22.z
     rec = Rectangle(x1, y1, x2, y2)
