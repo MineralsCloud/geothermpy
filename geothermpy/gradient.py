@@ -2,6 +2,8 @@
 
 import numpy as np
 
+import geothermpy.unit
+
 __all__ = [
     'GeothermalGradient'
 ]
@@ -10,7 +12,7 @@ __all__ = [
 class GeothermalGradient:
     def __init__(self, alpha, volumes, cp):
         self.alpha = alpha * 10 ** 5
-        self.volumes = volumes
+        self.volumes = geothermpy.unit.b3_to_a3(volumes)
         self.cp = cp
         self.temperatures = alpha.iloc[:, 0]
         self.pressures = np.array(alpha.columns[1:], dtype=float)

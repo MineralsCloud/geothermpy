@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from geothermpy import load_csv, bind, Point, GeothermalGradient, plot
+from geothermpy import load_csv, bind, Point, GeothermalGradient, plot, load_geothermal_gradient
 
 if __name__ == '__main__':
     d = load_csv({
@@ -14,6 +14,7 @@ if __name__ == '__main__':
     v = d['v']
     ts = v.iloc[:, 0]
 
-    gg = GeothermalGradient(alpha, v, cp)
-    trace = bind.bind(gg, Point(51, 300))
+    # gg = GeothermalGradient(alpha, v, cp)
+    gg = load_geothermal_gradient('adiabat.csv')
+    trace = bind.bind(gg, Point(1000, 20))
     plot.plot_trace(trace)
