@@ -15,7 +15,7 @@ def linear_interpolate(a, b, f, g):
 def bilinear_interpolate(q11: SurfacePoint, q12: SurfacePoint, q21: SurfacePoint, q22: SurfacePoint):
     x1, x2, y1, y2 = q11.x, q21.x, q11.y, q22.y
     v11, v12, v21, v22 = q11.z, q12.z, q21.z, q22.z
-    rec = Rectangle(x1, y1, x2, y2)
+    rec = Rectangle(x1, x2, y1, y2)
 
     def f(x, y):
         if not within_rectangle(rec, Point(x, y)):
