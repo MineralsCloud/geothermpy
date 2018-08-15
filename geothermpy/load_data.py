@@ -8,4 +8,7 @@ __all__ = [
 
 
 def load_csv(d: dict) -> dict:
-    return {k: pandas.read_csv(v) for k, v in d.items()}
+    for k, v in d.items():
+        m = pandas.read_csv(v)
+        d.update({k: m.set_index('Unnamed: 0')})
+    return d
