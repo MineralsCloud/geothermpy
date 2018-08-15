@@ -23,6 +23,9 @@ class Rectangle:
         self.dy = min(dy, uy)
         self.uy = max(dy, uy)
 
+    def __repr__(self):
+        return f"{self.__class__.__name__}({self.lx}, {self.rx}, {self.dy}, {self.uy})"
+
 
 def rectangle_to_points(rec: Rectangle) -> typing.Tuple[Point, ...]:
     lx, rx, dy, uy = rec.lx, rec.rx, rec.dy, rec.uy
