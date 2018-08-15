@@ -19,7 +19,7 @@ def bilinear_interpolate(q11: SurfacePoint, q12: SurfacePoint, q21: SurfacePoint
 
     def f(x, y):
         if not within_rectangle(rec, Point(x, y)):
-            raise ValueError("The point ($x, $y) is out of boundary!")
+            raise ValueError(f"The point ({x}, {y}) is out of boundary {rec}!")
         v1 = linear_interpolate(x1, x2, v11, v21)(x)
         v2 = linear_interpolate(x1, x2, v12, v22)(x)
         return linear_interpolate(y1, y2, v1, v2)(y)
