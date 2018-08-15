@@ -9,7 +9,7 @@ __all__ = [
 
 class GeothermalGradient:
     def __init__(self, alpha, volumes, cp):
-        self.alpha = alpha
+        self.alpha = alpha * 10 ** 5
         self.volumes = volumes
         self.cp = cp
         self.temperatures = alpha.iloc[:, 0]
