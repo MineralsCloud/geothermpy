@@ -6,7 +6,7 @@ from geothermpy import Point, runge_kutta_iter, bilinear_interpolate, SurfacePoi
 import pandas as pd
 
 
-def find_nearest(arr: np.ndarray, v) -> int:
+def find_nearest(arr, v) -> int:
     """
     Return the nearest index of *v* in an array *arr*.
     In case of multiple occurrences of the nearest values,
@@ -18,11 +18,11 @@ def find_nearest(arr: np.ndarray, v) -> int:
        >>> np.linspace(1, 10)[10]
        2.836734693877551
 
-    :param arr: The Numpy array to scan through.
+    :param arr: The array to scan through.
     :param v: Find the nearest value to *v* in the array *arr*.
     :return: A integer specifying the index of the nearest value.
     """
-    return np.argmin(abs(arr - v))
+    return abs(arr - v).argmin()
 
 
 def boundary_check(p: Point, adiabat: np.array):
@@ -61,15 +61,14 @@ def bind(geothermal_gradient: pd.DataFrame, p0: Point, h=0.01, n=1000):
     ps = geothermal_gradient.columns.astype('float')
     trace = [p0]
     for k in range(n):
-        print((abs(0.1 - ps).argmin()))
         x, y = find_nearest(ps, trace[k].y), find_nearest(ts, trace[k].x)
         z = x + 1
         w = y + 1
         f = bilinear_interpolate(
-            SurfacePoint(ps[x], ts[y], geothermal_gradient.iloc(y, x)),
-            SurfacePoint(ps[x], ts[w], geothermal_gradient.iloc(w, x)),
-            SurfacePoint(ps[z], ts[y], geothermal_gradient.iloc(y, z)),
-            SurfacePoint(ps[z], ts[w], geothermal_gradient.iloc(w, z))
+            SurfacePoint(ps[x], ts[y], geothermal_gradient.iloc[y, x]),
+            SurfacePoint(ps[x], ts[w], geothermal_gradient.iloc[w, x]),
+            SurfacePoint(ps[z], ts[y], geothermal_gradient.iloc[y, z]),
+            SurfacePoint(ps[z], ts[w], geothermal_gradient.iloc[w, z])
         )
         p_next = runge_kutta_iter(trace[k], f, h)
         print(p_next)
