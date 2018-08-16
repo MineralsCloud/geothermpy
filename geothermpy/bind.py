@@ -1,28 +1,24 @@
 #!/usr/bin/env python
 
 import numpy as np
+import bisect
 
 from geothermpy import Point, runge_kutta_iter, bilinear_interpolate, SurfacePoint
 import pandas as pd
 
 
-def find_nearest(arr, v) -> int:
+def find_le(arr, x):
     """
-    Return the nearest index of *v* in an array *arr*.
-    In case of multiple occurrences of the nearest values,
-    the index corresponding to the first occurrence is returned.
+    Find rightmost value less than or equal to *x*.
 
-    .. doctest::
-       >>> find_nearest(np.linspace(1, 10), 2.9)
-       10
-       >>> np.linspace(1, 10)[10]
-       2.836734693877551
-
-    :param arr: The array to scan through.
-    :param v: Find the nearest value to *v* in the array *arr*.
-    :return: A integer specifying the index of the nearest value.
+    :param arr:
+    :param x:
+    :return:
     """
-    return abs(arr - v).argmin()
+    i = bisect.bisect_right(arr, x)
+    if i:
+        return i - 1
+    raise ValueError("The argument *arr* is not sorted, the algorithm might not work!")
 
 
 def boundary_check(p: Point, adiabat: np.array):
@@ -61,9 +57,13 @@ def bind(geothermal_gradient: pd.DataFrame, p0: Point, h=0.01, n=1000):
     ps = geothermal_gradient.columns.astype('float')
     trace = [p0]
     for k in range(n):
-        x, y = find_nearest(ps, trace[k].y), find_nearest(ts, trace[k].x)
-        z = x + 1
-        w = y + 1
+        x, y = find_le(ps, trace[k].x), find_le(ts, trace[k].y)
+        if x == len(ps) - 1:
+            x = len(ps) - 2
+        z = x + 2
+        if y == len(ts) - 1:
+            y = len(ts) - 2
+        w = y + 2
         f = bilinear_interpolate(
             SurfacePoint(ps[x], ts[y], geothermal_gradient.iloc[y, x]),
             SurfacePoint(ps[x], ts[w], geothermal_gradient.iloc[w, x]),
@@ -71,7 +71,6 @@ def bind(geothermal_gradient: pd.DataFrame, p0: Point, h=0.01, n=1000):
             SurfacePoint(ps[z], ts[w], geothermal_gradient.iloc[w, z])
         )
         p_next = runge_kutta_iter(trace[k], f, h)
-        print(p_next)
         trace.append(p_next)
     return trace
 
