@@ -2,11 +2,10 @@
 
 from bisect import bisect_right
 
-from geothermpy import Point
-
 __all__ = [
     'find_le',
-    'find_gt'
+    'find_gt',
+    'find_lower_bound',
 ]
 
 
@@ -24,9 +23,9 @@ def find_le(arr, x):
     raise ValueError("The argument *arr* is not sorted, the algorithm might not work!")
 
 
-def check(ps, ts):
-    def f(p: Point):
-        return find_le(ps, p.x), find_le(ts, p.y)
+def find_lower_bound(ps, ts):
+    def f(x, y):
+        return find_le(ps, x), find_le(ts, y)
 
     return f
 
