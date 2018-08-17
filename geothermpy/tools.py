@@ -2,6 +2,8 @@
 
 from bisect import bisect_right
 
+from geothermpy import Point
+
 __all__ = [
     'find_le',
     'find_gt'
@@ -20,6 +22,13 @@ def find_le(arr, x):
     if i:
         return i - 1
     raise ValueError("The argument *arr* is not sorted, the algorithm might not work!")
+
+
+def check(ps, ts):
+    def f(p: Point):
+        return find_le(ps, p.x), find_le(ts, p.y)
+
+    return f
 
 
 def find_gt(arr, x):
