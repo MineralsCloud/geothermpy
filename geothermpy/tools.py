@@ -26,7 +26,7 @@ def find_le(arr, x):
     i = bisect_right(arr, x)
     if i:
         return i - 1
-    raise ValueError
+    raise ValueError(f"Cannot find the rightmost index whose value is less than or equal to {x}! Check your input!")
 
 
 if __name__ == '__main__':
