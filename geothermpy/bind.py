@@ -7,7 +7,7 @@ import pandas as pd
 from geothermpy import Point, SurfacePoint, bilinear_interpolate, runge_kutta_iter, find_le
 
 
-def find_lower_bounds(xs, ys):
+def find_lower_bounds(xs, ys) -> Callable:
     """
     A two-dimensional version of ``find_le`` function.
 
