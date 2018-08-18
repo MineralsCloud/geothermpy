@@ -2,6 +2,7 @@
 
 from typing import Callable
 
+import numpy as np
 import pandas as pd
 
 from geothermpy import Point, SurfacePoint, bilinear_interpolate, runge_kutta_iter, find_le
@@ -46,15 +47,18 @@ def inject_find_lower_bound(ps, ts, geothermal_gradient) -> Callable:
     return g
 
 
-def bind(geothermal_gradient: pd.DataFrame, p0: Point, h=0.01, n=1000):
+def generate_trace(geothermal_gradient, p0: Point, h=0.01, n=1000):
+    if not isinstance(geothermal_gradient, pd.DataFrame):
+        raise TypeError("The argument *geothermal_gradient* should be a Pandas DataFrame!")
+
     ts = geothermal_gradient.index.astype('float').values
     ps = geothermal_gradient.columns.astype('float').values
-    trace = [p0]
+    trace = np.empty(n, dtype=Point)
+    trace[0] = p0
+    f = inject_find_lower_bound(ps, ts, geothermal_gradient.values)
     for i in range(n):
-        g = inject_find_lower_bound(ps, ts, geothermal_gradient.values)
         try:
-            p_next = runge_kutta_iter(trace[i], g, h)
+            trace[i + 1] = runge_kutta_iter(trace[i], f, h)
         except IndexError:
-            return trace
-        trace.append(p_next)
+            return trace[:i + 1]
     return trace
