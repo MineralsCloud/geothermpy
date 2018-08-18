@@ -11,10 +11,22 @@ __all__ = [
 
 
 def linear_interpolate(a, b, f, g) -> Callable:
-    def h(x):
-        return ((b - x) * f + (x - a) * g) / (b - a)
+    """
+    Return a function of the linear interpolation between any 2 abstract data points `(a, f)` and `(b, g)`.
 
-    return h
+    :param a: The x coordinate of the first abstract data point.
+    :param b: The x coordinate of the second abstract data point. The argument *a* cannot equal to the argument *b*!
+    :param f: The y coordinate of the first abstract data point.
+    :param g: The y coordinate of the second abstract data point.
+    :return: A closure that can evaluate on any ``x`` between the interval :math:`[a, b]`.
+    """
+    if a != b:
+        def h(x):
+            return ((b - x) * f + (x - a) * g) / (b - a)
+
+        return h
+
+    raise ValueError("The argument *a* cannot equal to the argument *b*!")
 
 
 def bilinear_interpolate(q11: SurfacePoint, q12: SurfacePoint, q21: SurfacePoint, q22: SurfacePoint) -> Callable:
