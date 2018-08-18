@@ -41,7 +41,7 @@ def inject_find_lower_bound(ps, ts, geothermal_gradient) -> Callable:
             SurfacePoint(ps[o], ts[n], geothermal_gradient[n, o]),
             SurfacePoint(ps[o], ts[p], geothermal_gradient[p, o])
         )
-        return interpolated_function(x, y)  # Evaluate function on coordinates (x, y).
+        return interpolated_function(x, y)  # Evaluate interpolated function on point (x, y).
 
     return g
 

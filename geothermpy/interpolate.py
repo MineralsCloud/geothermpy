@@ -34,10 +34,10 @@ def bilinear_interpolate(q11: SurfacePoint, q12: SurfacePoint, q21: SurfacePoint
     Bilinear interpolation referenced from `wiki <https://en.wikipedia.org/wiki/Bilinear_interpolation>`_. The order
     of points :math:`Q_{11}, \ldots, Q_{22}` are the same as the wiki page.
 
-    :param q11: The lower left corner point with its z-coordinate of a rectangle.
-    :param q12: The upper left corner point with its z-coordinate of a rectangle.
-    :param q21: The lower right corner point with its z-coordinate of a rectangle.
-    :param q22: The upper right corner point with its z-coordinate of a rectangle.
+    :param q11: The lower-left corner point with its z-coordinate of a rectangle.
+    :param q12: The upper-left corner point with its z-coordinate of a rectangle.
+    :param q21: The lower-right corner point with its z-coordinate of a rectangle.
+    :param q22: The upper-right corner point with its z-coordinate of a rectangle.
     :return: A bivariate closure which can be evaluated on :math:`(x, y)`, which is within the rectangle region
         specified by *q11*, *q12*, *q21* and *q22*.
     """
