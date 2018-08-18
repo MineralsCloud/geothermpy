@@ -11,8 +11,8 @@ def find_lower_bounds(xs, ys) -> Callable:
     """
     A two-dimensional version of ``find_le`` function.
 
-    :param xs: An array whose elements are monotonic increasing in the x direction.
-    :param ys: An array whose elements are monotonic increasing in the y direction.
+    :param xs: An array whose elements are monotonic increasing in the x-direction.
+    :param ys: An array whose elements are monotonic increasing in the y-direction.
     :return: A closure that could return the lower bounds of an ``(x, y)`` coordinate pair, restricted in *xs* and *ys*,
         respectively.
     """
@@ -22,8 +22,8 @@ def find_lower_bounds(xs, ys) -> Callable:
         A function that accept an ``(x, y)`` coordinate pair, and return the rightmost indices whose values
         are less than or equal to *x* and *y*, respectively.
 
-        :param x: The coordinate in the x direction that needs to be found the lower bound.
-        :param y: The coordinate in the y direction that needs to be found the lower bound.
+        :param x: The coordinate in the x-direction that needs to be found the lower bound.
+        :param y: The coordinate in the y-direction that needs to be found the lower bound.
         :return: A tuple of indices which specifies the lowers bounds of *x* and *y*, respectively.
         """
         return find_le(xs, x), find_le(ys, y)
@@ -41,7 +41,7 @@ def inject_find_lower_bound(ps, ts, geothermal_gradient) -> Callable:
             SurfacePoint(ps[o], ts[n], geothermal_gradient[n, o]),
             SurfacePoint(ps[o], ts[p], geothermal_gradient[p, o])
         )
-        return interpolated_function(x, y)
+        return interpolated_function(x, y)  # Evaluate function on coordinates (x, y).
 
     return g
 

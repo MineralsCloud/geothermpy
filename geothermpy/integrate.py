@@ -9,7 +9,7 @@ __all__ = [
 
 def runge_kutta_iter(p: Point, f, h=0.01) -> Point:
     """
-    Integrate an initial value problem
+    Integrate an initial value problem using the Runge–Kutta method (fourth-order).
 
     .. math::
 
