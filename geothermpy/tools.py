@@ -16,7 +16,7 @@ def find_le(arr, x):
 
        >>> find_le([1, 2, 3, 4, 5], 3.1)
        2
-       >>> find_le([1, 2, 3, 3.2, 5], 3.1)
+       >>> find_le([1, 2, 3, 3.2, 5], 3)
        2
 
     :param arr: An array whose elements are monotonic increasing.
