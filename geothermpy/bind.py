@@ -33,6 +33,17 @@ def find_lower_bounds(xs, ys) -> Callable:
 
 
 def inject_find_lower_bound(ps, ts, geothermal_gradient) -> Callable:
+    """
+    Inject a bound check into the bilinear interpolation algorithm. Will be used in the integration algorithm.
+
+    :param ps: Check whether the x-coordinate is within the pressure range.
+    :param ts: Check whether the x-coordinate is within the pressure range.
+    :param geothermal_gradient: Must be a Numpy array that specifying the geothermal gradient
+        :math:`\\frac{ dT }{ dP }(P, T)`. The temperatures should be in an increasing order from top to bottom,
+        and the pressures should be in an increasing order from left to right.
+    :return: A function that can evaluate on point :math:`(x, y)`.
+    """
+
     def g(x, y):
         m, n = find_lower_bounds(ps, ts)(x, y)
         o, p = m + 1, n + 1
@@ -51,16 +62,16 @@ def generate_trace(geothermal_gradient, p0: Point, h=0.01, n=1000):
     """
     Solve the initial value problem by an integration method. Return a trace of points on each integration step.
 
-    :param geothermal_gradient: A Pandas ``DataFrame`` specifying the geothermal gradient ``\\frac{ dT }{ dP }(P, T)``,
-        with ``columns`` attribute to be pressures and ``index`` attribute to be temperatures. The temperatures should
-        be in an increasing order from top to bottom, and the pressures should be in an increasing order from left to
-        right.
+    :param geothermal_gradient: A Pandas ``DataFrame`` specifying the geothermal gradient
+        :math:`\\frac{ dT }{ dP }(P, T)`, with ``columns`` attribute to be pressures and ``index`` attribute to be
+        temperatures. The temperatures should be in an increasing order from top to bottom,
+        and the pressures should be in an increasing order from left to right.
     :param p0: A ``Point`` specifying the initial value of the ODE, note that the final result is sensitive to the
         initial value so it has to be carefully chosen.
     :param h: The interval between each pressure step. The default value is ``0.01``.
-    :param n: Generate *n* time steps using the integration method, if there is no index out of bounds (of the
+    :param n: Generate *n* steps using the integration method, if there is no index out of bounds (of the
         pressures) during the integration. If that happens, the accumulated trace up to that step is returned.
-        Note that the total number of steps *n* includes the initial value, so the number of generated time
+        Note that the total number of steps *n* includes the initial value, so the number of generated
         steps is :math:`n-1`.
     :return: A numpy array contains at most *n* ``Point``s, depending on whether there is an index out of bounds.
     """
