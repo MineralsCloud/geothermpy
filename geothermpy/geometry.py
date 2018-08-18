@@ -9,7 +9,6 @@ __all__ = [
     'SurfacePoint',
     'rectangle_to_points',
     'within_rectangle',
-    'point_to_surface_point'
 ]
 
 Point = namedtuple('Point', ['x', 'y'])
@@ -36,7 +35,3 @@ def within_rectangle(rec: Rectangle, t: Point) -> bool:
     lx, rx, dy, uy = rec.lx, rec.rx, rec.dy, rec.uy
     x, y = t.x, t.y
     return lx <= x <= rx and dy <= y <= uy
-
-
-def point_to_surface_point(p: Point, z: float) -> SurfacePoint:
-    return SurfacePoint(p.x, p.y, z)
