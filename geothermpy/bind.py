@@ -4,12 +4,36 @@ from typing import Callable
 
 import pandas as pd
 
-from geothermpy import Point, SurfacePoint, bilinear_interpolate, runge_kutta_iter, find_lower_bound
+from geothermpy import Point, SurfacePoint, bilinear_interpolate, runge_kutta_iter, find_le
+
+
+def find_lower_bounds(xs, ys):
+    """
+    A two-dimensional version of ``find_le`` function.
+
+    :param xs: An array whose elements are monotonic increasing in the x direction.
+    :param ys: An array whose elements are monotonic increasing in the y direction.
+    :return: A closure that could return the lower bounds of an ``(x, y)`` coordinate pair, restricted in *xs* and *ys*,
+        respectively.
+    """
+
+    def f(x, y):
+        """
+        A function that accept an ``(x, y)`` coordinate pair, and return the rightmost indices whose values
+        are less than or equal to *x* and *y*, respectively.
+
+        :param x: The coordinate in the x direction that needs to be found the lower bound.
+        :param y: The coordinate in the y direction that needs to be found the lower bound.
+        :return: A tuple of indices which specifies the lowers bounds of *x* and *y*, respectively.
+        """
+        return find_le(xs, x), find_le(ys, y)
+
+    return f
 
 
 def inject_find_lower_bound(ps, ts, geothermal_gradient) -> Callable:
     def g(x, y):
-        i, j = find_lower_bound(ps, ts)(x, y)
+        i, j = find_lower_bounds(ps, ts)(x, y)
         k, l = i + 1, j + 1
         if k == len(ps) or l == len(ts):
             raise IndexError("The index has reached the last of pressures or temperatures!")

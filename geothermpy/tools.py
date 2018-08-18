@@ -4,29 +4,29 @@ from bisect import bisect_right
 
 __all__ = [
     'find_le',
-    'find_lower_bound',
 ]
 
 
 def find_le(arr, x):
     """
-    Find the rightmost index whose value is less than or equal to *x*.
+    Find the rightmost index whose value is less than or equal to *x*. The algorithm is referenced from
+    `Python's official documentation <https://docs.python.org/3.7/library/bisect.html#bisect.bisect_right>`_.
 
-    :param arr:
-    :param x:
-    :return:
+    .. doctest::
+
+       >>> find_le([1, 2, 3, 4, 5], 3.1)
+       2
+       >>> find_le([1, 2, 3, 3.2, 5], 3.1)
+       2
+
+    :param arr: An array whose elements are monotonic increasing.
+    :param x: A value could be used to compare with the elements in *arr*.
+    :return: The rightmost index whose value is less than or equal to *x*.
     """
     i = bisect_right(arr, x)
     if i:
         return i - 1
-    raise ValueError("The argument *arr* is not sorted, the algorithm might not work!")
-
-
-def find_lower_bound(ps, ts):
-    def f(x, y):
-        return find_le(ps, x), find_le(ts, y)
-
-    return f
+    raise ValueError
 
 
 if __name__ == '__main__':
