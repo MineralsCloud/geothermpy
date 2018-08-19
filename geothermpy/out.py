@@ -24,7 +24,7 @@ class TraceWriter:
     def to_csv(self, include_derivative=True, **kwargs):
         xs, ys = np.array([p.x for p in self._trace]), np.array([p.y for p in self._trace])
         if include_derivative:
-            df = pd.DataFrame(np.vstack((xs, ys, self.derivative)).T, columns=['T', 'P', 'G'])
+            df = pd.DataFrame(np.vstack((xs, ys, self.derivative)).T, columns=['P', 'T', 'G'])
         else:
-            df = pd.DataFrame(np.vstack((xs, ys)).T, columns=['T', 'P'])
+            df = pd.DataFrame(np.vstack((xs, ys)).T, columns=['P', 'T'])
         df.to_csv(**kwargs)
