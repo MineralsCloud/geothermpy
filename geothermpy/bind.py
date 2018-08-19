@@ -7,6 +7,12 @@ import pandas as pd
 
 from geothermpy import Point, SurfacePoint, bilinear_interpolate, runge_kutta_iter, find_le
 
+__all__ = [
+    'find_lower_bounds',
+    'inject_find_lower_bound',
+    'generate_trace'
+]
+
 
 def find_lower_bounds(xs, ys) -> Callable:
     """
