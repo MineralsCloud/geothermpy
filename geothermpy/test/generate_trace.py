@@ -6,7 +6,7 @@ import pandas as pd
 from geothermpy import bind, Point, load_geothermal_gradient
 
 if __name__ == '__main__':
-    gg = load_geothermal_gradient('example.csv')
+    gg = load_geothermal_gradient('data/example.csv')
     trace = bind.generate_trace(gg, Point(24, 1876.80005), h=0.01, n=100000)
     xs = list(map(lambda x: x.x, trace))
     ys = list(map(lambda x: x.y, trace))
