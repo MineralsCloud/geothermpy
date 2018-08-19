@@ -47,7 +47,8 @@ def inject_find_lower_bound(ps, ts, geothermal_gradient) -> Callable:
     :param geothermal_gradient: Must be a Numpy array that specifying the geothermal gradient
         :math:`\\frac{ dT }{ dP }(P, T)`. The temperatures should be in an increasing order from top to bottom,
         and the pressures should be in an increasing order from left to right.
-    :return: A function that can evaluate on point :math:`(x, y)`.
+    :return: A function that can evaluate the geothermal gradient on any point :math:`(x, y)` within
+        the smallest rectangle region enclosing it.
     """
 
     def g(x, y):
@@ -59,7 +60,7 @@ def inject_find_lower_bound(ps, ts, geothermal_gradient) -> Callable:
             SurfacePoint(ps[o], ts[n], geothermal_gradient[n, o]),  # Note the order of indices!
             SurfacePoint(ps[o], ts[p], geothermal_gradient[p, o])  # Note the order of indices!
         )
-        return interpolated_function(x, y)  # Evaluate interpolated function on point (x, y).
+        return interpolated_function(x, y)  # Evaluate the geothermal gradient on point (x, y).
 
     return g
 
