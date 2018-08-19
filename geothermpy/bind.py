@@ -7,6 +7,13 @@ import pandas as pd
 
 from geothermpy import Point, SurfacePoint, bilinear_interpolate, runge_kutta_iter, find_le
 
+__all__ = [
+    'find_lower_bounds',
+    'inject_find_lower_bound',
+    'generate_trace',
+    'generate_derivative_from_trace'
+]
+
 
 def find_lower_bounds(xs, ys) -> Callable:
     """
@@ -41,7 +48,8 @@ def inject_find_lower_bound(ps, ts, geothermal_gradient) -> Callable:
     :param geothermal_gradient: Must be a Numpy array that specifying the geothermal gradient
         :math:`\\frac{ dT }{ dP }(P, T)`. The temperatures should be in an increasing order from top to bottom,
         and the pressures should be in an increasing order from left to right.
-    :return: A function that can evaluate on point :math:`(x, y)`.
+    :return: A function that can evaluate the geothermal gradient on any point :math:`(x, y)` within
+        the smallest rectangle region enclosing it.
     """
 
     def g(x, y):
@@ -53,7 +61,7 @@ def inject_find_lower_bound(ps, ts, geothermal_gradient) -> Callable:
             SurfacePoint(ps[o], ts[n], geothermal_gradient[n, o]),  # Note the order of indices!
             SurfacePoint(ps[o], ts[p], geothermal_gradient[p, o])  # Note the order of indices!
         )
-        return interpolated_function(x, y)  # Evaluate interpolated function on point (x, y).
+        return interpolated_function(x, y)  # Evaluate the geothermal gradient on point (x, y).
 
     return g
 
@@ -89,3 +97,8 @@ def generate_trace(geothermal_gradient, p0: Point, h=0.01, n=1000):
         except IndexError:
             return trace[:i + 1]
     return trace
+
+
+def generate_derivative_from_trace(trace):
+    xs, ys = np.array([p.x for p in trace]), np.array([p.y for p in trace])
+    return np.gradient(ys) / np.gradient(xs)
