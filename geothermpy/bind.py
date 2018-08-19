@@ -10,7 +10,8 @@ from geothermpy import Point, SurfacePoint, bilinear_interpolate, runge_kutta_it
 __all__ = [
     'find_lower_bounds',
     'inject_find_lower_bound',
-    'generate_trace'
+    'generate_trace',
+    'generate_derivative_from_trace'
 ]
 
 
@@ -96,3 +97,8 @@ def generate_trace(geothermal_gradient, p0: Point, h=0.01, n=1000):
         except IndexError:
             return trace[:i + 1]
     return trace
+
+
+def generate_derivative_from_trace(trace):
+    xs, ys = np.array([p.x for p in trace]), np.array([p.y for p in trace])
+    return np.gradient(ys) / np.gradient(xs)
