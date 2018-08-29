@@ -68,9 +68,9 @@ def within_rectangle(rec: Rectangle, p: Point) -> bool:
     :param p: A two-dimensional ``Point``.
     :return: Whether the point *p* is within a rectangle region, on boundary is regarded as ``True``.
     """
-    lx, rx, dy, uy = rec.lx, rec.rx, rec.ly, rec.uy
+    lx, rx, ly, uy = rec.lx, rec.rx, rec.ly, rec.uy
     x, y = p.x, p.y
-    return lx <= x <= rx and dy <= y <= uy
+    return lx <= x <= rx and ly <= y <= uy
 
 
 if __name__ == '__main__':
