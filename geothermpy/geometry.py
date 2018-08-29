@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import typing
 from collections import namedtuple
 
 __all__ = [
