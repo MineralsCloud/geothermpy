@@ -1,4 +1,6 @@
-![geothermpy](https://i.imgur.com/nfNOLBnl.png)
+<div align="center">
+  <img src="https://i.imgur.com/nfNOLBnl.png"><br>
+</div>
 
 -----------------
 
