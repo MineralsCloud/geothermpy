@@ -1,3 +1,7 @@
+![geothermpy](https://i.imgur.com/nfNOLBnl.png)
+
+-----------------
+
 # geothermpy
 
 For corresponding paper, please have a look at Ref. 1.
