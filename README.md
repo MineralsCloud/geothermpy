@@ -1,8 +1,6 @@
 <div align="center">
-  <img src="https://i.imgur.com/nfNOLBnl.png"><br>
+  <img src="https://i.imgur.com/nfNOLBnm.png"><br>
 </div>
-
------------------
 
 # geothermpy
 
