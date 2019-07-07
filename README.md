@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="https://i.imgur.com/nfNOLBnm.png"><br>
+</div>
+
 # geothermpy
 
 For corresponding paper, please have a look at Ref. 1.
