@@ -17,3 +17,7 @@ class OutTester(unittest.TestCase):
     def test_to_csv(self):
         self.trace_writer.to_csv(path_or_buf='data/trace2cols.csv', include_derivative=False, index=False)
         self.trace_writer.to_csv(path_or_buf='data/trace3cols.csv', include_derivative=True, index=False)
+
+
+if __name__ == "__main__":
+    unittest.main()
