@@ -2,7 +2,7 @@
   <img src="https://i.imgur.com/nfNOLBnm.png"><br>
 </div>
 
-# geothermpy
+# GeothermPy
 
 For corresponding paper, please have a look at Ref. 1.
 
