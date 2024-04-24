@@ -4,6 +4,8 @@
 
 # GeothermPy
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11055532.svg)](https://doi.org/10.5281/zenodo.11055532)
+
 For corresponding paper, please have a look at Ref. 1.
 
 ## References
